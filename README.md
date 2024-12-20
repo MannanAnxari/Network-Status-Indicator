@@ -137,7 +137,7 @@ init({
 You can also use the Network Status Indicator directly from a CDN:
 
 ```html
-<script src="https://unpkg.com/network-status-indicator/dist/vanilla.min.js"></script>
+<script src="https://unpkg.com/network-status-indicator@1.0.6/dist/vanilla.min.js"></script>
 <script>
   NetworkStatusIndicator.init({
     onlineText: "You're back online!",
