@@ -1,4 +1,4 @@
-export function init(options = {}) {
+function init(options = {}) {
   const uniquePrefix = "vnsi-" + Math.random().toString(36).substr(2, 5);
 
   const styles = `
@@ -124,5 +124,4 @@ export function init(options = {}) {
 }
 
 window.NetworkStatusIndicator = { init };
-
-export default { init };
+module.exports = { init };
