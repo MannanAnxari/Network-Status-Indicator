@@ -1,7 +1,7 @@
 export function init(options = {}) {
-    const uniquePrefix = 'vnsi-' + Math.random().toString(36).substr(2, 5);
-  
-    const styles = `
+  const uniquePrefix = "vnsi-" + Math.random().toString(36).substr(2, 5);
+
+  const styles = `
       .${uniquePrefix}-container {
         position: fixed;
         top: 20px;
@@ -55,68 +55,74 @@ export function init(options = {}) {
         100% { transform: scale(1); opacity: 1; }
       }
     `;
-  
-    function injectStyles() {
-      const styleElement = document.createElement('style');
-      styleElement.textContent = styles;
-      document.head.appendChild(styleElement);
-    }
-  
-    function createNetworkStatusBar() {
-      const container = document.createElement('div');
-      container.className = `${uniquePrefix}-container`;
-  
-      const bar = document.createElement('div');
-      bar.className = `${uniquePrefix}-bar`;
-  
-      const icon = document.createElement('div');
-      icon.className = `${uniquePrefix}-icon`;
-  
-      const text = document.createElement('span');
-      text.className = `${uniquePrefix}-text`;
-  
-      bar.appendChild(icon);
-      bar.appendChild(text);
-      container.appendChild(bar);
-      document.body.appendChild(container);
-  
-      return { bar, text };
-    }
-  
-    function showNetworkStatus(online) {
-      const { bar, text } = window[uniquePrefix] || {};
-      if (!bar || !text) return;
-  
-      bar.classList.remove(`${uniquePrefix}-offline`, `${uniquePrefix}-online`);
-      bar.classList.add(online ? `${uniquePrefix}-online` : `${uniquePrefix}-offline`);
-      text.textContent = online ? options.onlineText || "You're back online!" : options.offlineText || "You're offline. Check your connection.";
-      bar.classList.add(`${uniquePrefix}-show`);
-  
-      if (online) {
-        setTimeout(() => {
-          bar.classList.remove(`${uniquePrefix}-show`);
-        }, options.onlineDuration || 3000);
-      }
-    }
-  
-    function initNetworkStatusIndicator() {
-      injectStyles();
-      window[uniquePrefix] = createNetworkStatusBar();
-  
-      window.addEventListener('online', () => showNetworkStatus(true));
-      window.addEventListener('offline', () => showNetworkStatus(false));
-  
-      if (!navigator.onLine) {
-        showNetworkStatus(false);
-      }
-    }
-  
-    // Initialize when the DOM is ready
-    if (document.readyState === 'loading') {
-      document.addEventListener('DOMContentLoaded', initNetworkStatusIndicator);
-    } else {
-      initNetworkStatusIndicator();
+
+  function injectStyles() {
+    const styleElement = document.createElement("style");
+    styleElement.textContent = styles;
+    document.head.appendChild(styleElement);
+  }
+
+  function createNetworkStatusBar() {
+    const container = document.createElement("div");
+    container.className = `${uniquePrefix}-container`;
+
+    const bar = document.createElement("div");
+    bar.className = `${uniquePrefix}-bar`;
+
+    const icon = document.createElement("div");
+    icon.className = `${uniquePrefix}-icon`;
+
+    const text = document.createElement("span");
+    text.className = `${uniquePrefix}-text`;
+
+    bar.appendChild(icon);
+    bar.appendChild(text);
+    container.appendChild(bar);
+    document.body.appendChild(container);
+
+    return { bar, text };
+  }
+
+  function showNetworkStatus(online) {
+    const { bar, text } = window[uniquePrefix] || {};
+    if (!bar || !text) return;
+
+    bar.classList.remove(`${uniquePrefix}-offline`, `${uniquePrefix}-online`);
+    bar.classList.add(
+      online ? `${uniquePrefix}-online` : `${uniquePrefix}-offline`
+    );
+    text.textContent = online
+      ? options.onlineText || "You're back online!"
+      : options.offlineText || "You're offline. Check your connection.";
+    bar.classList.add(`${uniquePrefix}-show`);
+
+    if (online) {
+      setTimeout(() => {
+        bar.classList.remove(`${uniquePrefix}-show`);
+      }, options.onlineDuration || 3000);
     }
   }
-  
-  export default { init };
+
+  function initNetworkStatusIndicator() {
+    injectStyles();
+    window[uniquePrefix] = createNetworkStatusBar();
+
+    window.addEventListener("online", () => showNetworkStatus(true));
+    window.addEventListener("offline", () => showNetworkStatus(false));
+
+    if (!navigator.onLine) {
+      showNetworkStatus(false);
+    }
+  }
+
+  // Initialize when the DOM is ready
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", initNetworkStatusIndicator);
+  } else {
+    initNetworkStatusIndicator();
+  }
+}
+
+window.NetworkStatusIndicator = { init };
+
+export default { init };
