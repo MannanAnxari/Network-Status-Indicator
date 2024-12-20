@@ -115,13 +115,6 @@
     }
   }
 
-  // Initialize when the DOM is ready
-  if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", init);
-  } else {
-    init();
-  }
-
   // Expose the init function to the global scope
   window.NetworkStatusIndicator = {
     init: init,
