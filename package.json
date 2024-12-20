@@ -1,16 +1,81 @@
 {
-  "name": "network",
-  "version": "1.0.0",
-  "main": "network-status-indicator.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "uglifyjs network-status-indicator.js -o network-status-indicator.min.js -c -m"
+  "name": "network-status-indicator",
+  "version": "1.0.1",
+  "description": "Network status indicator for web applications",
+  "main": "dist/index.js",
+  "module": "dist/index.esm.js",
+  "types": "dist/types/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "exports": {
+    ".": {
+      "import": "./dist/index.esm.js",
+      "require": "./dist/index.js",
+      "types": "./dist/types/index.d.ts"
+    },
+    "./react": {
+      "import": "./dist/react.esm.js",
+      "require": "./dist/react.js",
+      "types": "./dist/types/react.d.ts"
+    },
+    "./nextjs": {
+      "import": "./dist/nextjs.esm.js",
+      "require": "./dist/nextjs.js",
+      "types": "./dist/types/nextjs.d.ts"
+    },
+    "./vue": {
+      "import": "./dist/vue.esm.js",
+      "require": "./dist/vue.js"
+    },
+    "./vanilla": {
+      "import": "./dist/vanilla.esm.js",
+      "require": "./dist/vanilla.js"
+    }
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "description": "",
+  "scripts": {
+    "clean": "rimraf dist",
+    "build": "npm run clean && rollup -c",
+    "prepublishOnly": "npm run build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mannananxari/network-status-indicator.git"
+  },
+  "keywords": [
+    "network",
+    "status",
+    "indicator",
+    "react",
+    "vue",
+    "nextjs"
+  ],
+  "author": "Mannan kODRZ",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/mannananxari/network-status-indicator/issues"
+  },
+  "homepage": "https://github.com/mannananxari/network-status-indicator#readme",
+  "peerDependencies": {
+    "react": "^16.8.0 || ^17.0.0 || ^18.0.0",
+    "vue": "^3.0.0"
+  },
   "devDependencies": {
-    "uglify-js": "^3.19.3"
+    "@babel/core": "^7.15.0",
+    "@babel/preset-env": "^7.15.0",
+    "@babel/preset-react": "^7.26.3",
+    "@rollup/plugin-babel": "^5.3.1",
+    "@rollup/plugin-commonjs": "^20.0.0",
+    "@rollup/plugin-node-resolve": "^13.3.0",
+    "@types/react": "^17.0.19",
+    "@vue/compiler-sfc": "^3.5.13",
+    "rimraf": "^3.0.2",
+    "rollup": "^2.79.1",
+    "rollup-plugin-terser": "^7.0.2",
+    "rollup-plugin-typescript2": "^0.34.1",
+    "rollup-plugin-vue": "^6.0.0",
+    "tslib": "^2.5.0",
+    "typescript": "^4.9.5",
+    "vue": "^3.5.13"
   }
 }
