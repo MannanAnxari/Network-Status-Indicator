@@ -7,19 +7,32 @@ import vue from "rollup-plugin-vue";
 
 const createConfig = (input, output, format = "esm") => ({
   input,
-  output: {
-    file: `dist/${output}.${format === "esm" ? "esm.js" : "js"}`,
-    format,
-    sourcemap: true,
-    name: "NetworkStatusIndicator",
-    globals: {
-      react: "React",
-      vue: "Vue",
+  output: [
+    {
+      file: `dist/${output}.${format === "esm" ? "esm.js" : "js"}`,
+      format,
+      sourcemap: true,
+      name: "NetworkStatusIndicator",
+      globals: {
+        react: "React",
+        vue: "Vue",
+      },
     },
-  },
+    {
+      file: `dist/${output}.min.${format === "esm" ? "esm.js" : "js"}`,
+      format,
+      sourcemap: true,
+      name: "NetworkStatusIndicator",
+      globals: {
+        react: "React",
+        vue: "Vue",
+      },
+      plugins: [terser()], // Minify output
+    },
+  ],
   plugins: [
     resolve({
-      extensions: ['.js', '.jsx', '.ts', '.tsx', '.vue']
+      extensions: [".js", ".jsx", ".ts", ".tsx", ".vue"],
     }),
     typescript({
       tsconfig: "./tsconfig.json",
@@ -30,10 +43,9 @@ const createConfig = (input, output, format = "esm") => ({
       exclude: "node_modules/**",
       babelHelpers: "bundled",
       extensions: [".js", ".jsx", ".ts", ".tsx", ".vue"],
-      presets: ["@babel/preset-react", "@babel/preset-env"]
+      presets: ["@babel/preset-react", "@babel/preset-env"],
     }),
     commonjs(),
-    terser(),
   ],
   external: ["react", "vue"],
 });
