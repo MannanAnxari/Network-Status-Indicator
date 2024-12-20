@@ -124,4 +124,3 @@ function init(options = {}) {
 }
 
 window.NetworkStatusIndicator = { init };
-module.exports = { init };
